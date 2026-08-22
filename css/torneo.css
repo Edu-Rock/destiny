@@ -1,0 +1,14 @@
+.bracket-shell{background:linear-gradient(145deg,#f5f8f6,#e7efeb);border-radius:22px;padding:24px;overflow:auto;min-height:560px;box-shadow:inset 0 0 0 1px rgba(4,25,17,.08)}
+.bracket-layout{display:flex;gap:18px;min-width:max-content;align-items:stretch}.bracket-round{width:205px;display:flex;flex-direction:column;justify-content:space-around;gap:12px}.round-title{text-align:center;color:#173327;font-size:11px;letter-spacing:.12em;font-weight:900;margin-bottom:4px}.match-card{background:#fff;border:1px solid #dbe6e0;border-radius:12px;padding:7px;box-shadow:0 8px 18px rgba(19,47,34,.08);cursor:pointer;transition:.18s}.match-card:hover{transform:translateY(-2px);border-color:#19b86f;box-shadow:0 10px 22px rgba(19,47,34,.15)}.match-card.locked{cursor:default;opacity:.72}.match-row{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px;border-radius:8px;font-size:11px;font-weight:800;color:#20352b}.match-row+ .match-row{margin-top:3px}.match-row.win{background:#e7f9ef;color:#087443}.match-row.loss{background:#f4f5f5;color:#84938d}.match-row.pending{background:#f5f7f6;color:#7b8b84}.score-badge{min-width:24px;height:24px;border-radius:7px;display:grid;place-items:center;background:#dde7e2;color:#1d3328;font-size:10px}.match-row.win .score-badge{background:#1bb96e;color:#fff}.match-row.loss .score-badge{background:#dfe5e2;color:#75827d}.bracket-note{margin:auto;color:#53675d;text-align:center;max-width:520px;padding:60px 20px}.champion-card{background:linear-gradient(135deg,#fff8d7,#ffe78a);border:2px solid #e8bf3f;border-radius:16px;text-align:center;padding:18px;color:#76550b;box-shadow:0 15px 30px rgba(174,126,19,.16)}.champion-card i{font-size:30px}.champion-card strong{display:block;font-size:18px;margin-top:4px}.bye-tag{font-size:8px;color:#a27a10;text-transform:uppercase;letter-spacing:.08em;margin-left:5px}
+
+}
+
+.champion-win{animation:champIn .8s ease, glow 2s infinite alternate;}.champion-win .cup{font-size:70px}.champion-win strong{font-size:34px;display:block}@keyframes champIn{from{opacity:0;transform:scale(.5)}to{opacity:1;transform:scale(1)}}@keyframes glow{from{box-shadow:0 0 10px #ffd700}to{box-shadow:0 0 35px #ffd700}}
+
+.champion-cup-button{width:170px;height:170px;margin:0 auto 15px;cursor:pointer;transition:.3s;display:flex;align-items:center;justify-content:center}
+.champion-cup-button img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 0 18px #ffd700)}
+.champion-cup-button:hover{transform:scale(1.08)}
+.champion-cup-button:active{transform:scale(.95)}
+.celebrate-btn{cursor:pointer;border:0;border-radius:20px;padding:8px 18px;background:#dcae20;color:#fff;font-weight:800;box-shadow:0 4px 12px rgba(0,0,0,.25)}
+.celebrate-btn:hover{filter:brightness(1.1)}
+.celebrate-btn{margin-top:15px;background:#d4af37;color:#111;border:0;border-radius:30px;padding:10px 22px;font-weight:800;cursor:pointer}
