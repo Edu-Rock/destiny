@@ -24,11 +24,12 @@
       <button class="nav-item active" data-section="dashboard"><i class="bi bi-grid-1x2-fill"></i><span>Generalidades</span></button>
       <button class="nav-item" data-section="crear-torneo"><i class="bi bi-sliders2"></i><span>Configuración</span></button>
       <button class="nav-item" data-section="equipos"><i class="bi bi-shield-fill"></i><span>Equipos</span></button>
-      <button class="nav-item" data-section="usuarios"><i class="bi bi-people-fill"></i><span>Usuarios</span></button>
+      <button class="nav-item" data-section="usuarios"><i class="bi bi-people-fill"></i><span>Gestión Usuarios</span></button>
       <button class="nav-item" data-section="cancha"><i class="bi bi-diagram-3-fill"></i><span>Formación gráfica</span></button>
       <button class="nav-item" data-section="cuadro"><i class="bi bi-braces-asterisk"></i><span>Cuadro del torneo</span></button>
       <button class="nav-item" data-section="resultados"><i class="bi bi-clipboard2-check-fill"></i><span>Resultados</span></button>
       <button class="nav-item" data-section="clasificacion"><i class="bi bi-bar-chart-fill"></i><span>Clasificación</span></button>
+      <button class="nav-item" type="button" onclick="window.open('https://www.waze.com/es/live-map/directions/el-encanto-de-shangrila-los-ficus-puente-piedra?to=place.w.185403025.1854161321.14367805', '_blank')"><i class="bi bi-geo-alt-fill"></i><span>Lugar</span></button>
     </nav>
     <div class="sidebar-footer">
       <button class="btn btn-outline-light w-100 btn-sm" id="btn-demo"><i class="bi bi-magic me-2"></i>Cargar demo</button>
@@ -56,7 +57,7 @@
       </div>
       <div class="topbar-meta">
         <button class="storage-pill user-create-btn" id="btn-crear-usuario"><i class="bi bi-person-plus-fill"></i> Crear Usuario</button>
-        <span class="status-pill" id="badge-estado-torneo"><span></span> Inscripciones</span>
+        <button class="storage-pill" id="btn-acceso"><i class="bi bi-box-arrow-in-right"></i> Acceso</button><span class="status-pill" id="badge-estado-torneo"><span></span> Inscripciones</span>
         <span class="team-counter" id="badge-equipos-counter">0 / 8</span>
       </div>
     </header>
@@ -71,7 +72,7 @@
             <p>Sábado 29 de agosto, Lugar : El Encanto de Shangrila.</p>
             <div class="hero-actions">
               <button class="btn btn-primary" data-go="crear-torneo"><i class="bi bi-sliders2 me-2"></i>Configurar torneo</button>
-              <button class="btn btn-ghost" data-go="equipos"><i class="bi bi-person-plus me-2"></i>Inscribir equipo</button>
+              <button class="btn btn-ghost" id="btn-inscribir" data-go="equipos"><i class="bi bi-person-plus me-2"></i>Inscripción de Equipo & Camiseta</button>
             </div>
           </div>
           <div class="hero-ball-zone" id="hero-ball-zone" aria-hidden="true">
@@ -114,17 +115,13 @@
                 <input type="date" id="torneo-inicio" class="form-control form-control-lg">
               </div>
               <div class="col-md-6">
-                <label class="field-label">Modalidad</label>
-                <select id="torneo-equipos" class="form-select form-select-lg">
-                  <option value="8">Eliminación directa · 8 equipos</option>
-                  <option value="9">Eliminación directa · 9 equipos</option>
-                  <option value="10">Eliminación directa · 10 equipos</option>
-                  <option value="11">Eliminación directa · 11 equipos</option>
-                  <option value="12">Eliminación directa · 12 equipos</option>
-                  <option value="13">Eliminación directa · 13 equipos</option>
-                  <option value="14">Eliminación directa · 14 equipos</option>
-                  <option value="15">Eliminación directa · 15 equipos</option>
-                  <option value="16">Eliminación directa · 16 equipos</option>
+                <label class="field-label">¿Cuántos equipos participarán?</label>
+                  <select id="torneo-equipos" class="form-select form-select-lg">
+                  <option value="8">👥 8 equipos</option>
+                  <option value="10">👥 10 equipos</option>
+                  <option value="12">👥 12 equipos</option>
+                  <option value="14">👥 14 equipos</option>
+                  <option value="16">👥 16 equipos</option>
                 </select>
               </div>
               <div class="col-12">
@@ -245,17 +242,19 @@
 
       <!-- USERS -->
       <section id="sec-usuarios" class="app-section d-none">
-        <div class="section-heading"><div><span class="eyebrow">ADMINISTRACIÓN</span><h2>Gestión de Usuarios</h2><p>Crea usuarios Delegado de Equipo o Administrador.</p></div></div>
+        <div class="section-heading"><div><span class="eyebrow">ADMINISTRACIÓN</span><h2>Gestión de Usuarios</h2><p>Crea accesos de Delegados de Equipo. El acceso administrador es controlado por el sistema.</p></div></div>
         <div class="panel">
           <form id="form-usuario">
             <div class="row g-3">
-              <div class="col-md-6"><label class="field-label">Rol</label><select id="usuario-rol" class="form-select"><option value="delegado">Delegado de Equipo</option><option value="admin">Administrador</option></select></div>
               <div class="col-md-6"><label class="field-label">Nombre completo</label><input id="usuario-nombre" class="form-control" required></div>
-              <div class="col-md-6"><label class="field-label">Usuario</label><input id="usuario-login" class="form-control" required></div>
+              <div class="col-md-6"><label class="field-label">ID de Usuario</label><input id="usuario-id" class="form-control" required></div>
               <div class="col-md-6"><label class="field-label">Contraseña</label><input id="usuario-password" type="password" class="form-control" required></div>
-              <div class="col-md-6 delegado-field"><label class="field-label">Equipo asociado</label><input id="usuario-equipo" class="form-control"></div>
-              <div class="col-md-6 delegado-field"><label class="field-label">Teléfono / WhatsApp</label><input id="usuario-telefono" class="form-control"></div>
-              <div class="col-12"><button class="btn btn-primary btn-lg"><i class="bi bi-save"></i> Crear usuario</button></div>
+              <div class="col-md-6"><label class="field-label">Confirmación de contraseña</label><input id="usuario-password-confirm" type="password" class="form-control" required></div>
+              <div class="col-md-6"><label class="field-label">Correo electrónico</label><input id="usuario-correo" type="email" class="form-control"></div>
+              <div class="col-md-6"><label class="field-label">WhatsApp / Teléfono</label><input id="usuario-telefono" class="form-control" required></div>
+              <input id="usuario-rol" type="hidden" value="DELEGADO">
+              <input id="usuario-login" type="hidden">
+              <div class="col-12"><button class="btn btn-primary btn-lg"><i class="bi bi-save"></i> Guardar</button></div>
             </div>
           </form>
           <hr><div id="lista-usuarios"></div>
@@ -291,6 +290,7 @@
 <script src="js/torneo.js"></script>
 <script src="usuarios/roles.js"></script>
 <script src="usuarios/usuarios.js"></script>
+<script src="js/login.js"></script>
 <script src="js/app.js"></script>
 <script src="js/confetti-campeon.js"></script>\n
 
@@ -319,6 +319,29 @@
   </div>
 </a>
 <style>.whatsapp-liquido{position:fixed!important;right:24px;bottom:20px;z-index:9999}.whatsapp-liquido.hidden-wa{display:none!important}</style>
+
+
+<!-- MODAL ACCESO -->
+<div class="modal fade" id="modalAcceso" tabindex="-1">
+ <div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content">
+   <div class="modal-header">
+    <h5 class="modal-title">Acceso al Torneo</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+   </div>
+   <div class="modal-body">
+    <label>ID de Usuario</label>
+    <input id="login-id" class="form-control mb-3" placeholder="Ingrese su usuario">
+    <label>Contraseña</label>
+    <input id="login-pass" type="password" class="form-control mb-3" placeholder="Ingrese su contraseña">
+    <button id="btn-login" class="btn btn-success w-100">Ingresar</button>
+    <div class="text-center mt-3">
+      <small>¿No tiene cuenta? Cree un delegado desde Gestión de Usuarios.</small>
+    </div>
+   </div>
+  </div>
+ </div>
+</div>
 
 </body>
 </html>
