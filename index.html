@@ -56,8 +56,23 @@
         <span id="global-tournament-title" hidden>CAMPEONATO LOS SUREÑOS 2026</span>
       </div>
       <div class="topbar-meta">
-        <button class="storage-pill user-create-btn" id="btn-crear-usuario"><i class="bi bi-person-plus-fill"></i> Crear Usuario</button>
-        <button class="storage-pill" id="btn-acceso"><i class="bi bi-box-arrow-in-right"></i> Acceso</button><span class="status-pill" id="badge-estado-torneo"><span></span> Inscripciones</span>
+        <div class="profile-menu-wrap" id="profile-menu-wrap">
+          <button class="profile-user-btn" id="profile-user-btn">
+            <i class="bi bi-person-circle"></i>
+            <span id="profile-user-name">Usuario</span>
+            <i class="bi bi-chevron-down"></i>
+          </button>
+          <div class="profile-dropdown d-none" id="profile-dropdown">
+            <div class="profile-header">
+              <strong id="profile-dropdown-name">Usuario</strong>
+              <small id="profile-dropdown-role">Delegado</small>
+            </div>
+            <button type="button" id="btn-acceso"><i class="bi bi-box-arrow-in-right"></i> Acceso</button>
+            <button type="button" id="btn-crear-usuario"><i class="bi bi-person-plus-fill"></i> Crear Usuario</button>
+            <button type="button" id="btn-editar-perfil"><i class="bi bi-person-gear"></i> Editar perfil</button>
+            <button type="button" id="btn-cerrar-sesion" class="logout-option"><i class="bi bi-box-arrow-right"></i> Cerrar sesión</button>
+          </div>
+        </div><span class="status-pill" id="badge-estado-torneo"><span></span> Inscripciones</span>
         <span class="team-counter" id="badge-equipos-counter">0 / 8</span>
       </div>
     </header>
@@ -343,5 +358,18 @@
  </div>
 </div>
 
+
+<script>
+(function(){
+ const btn=document.getElementById('btn-acceder');
+ const menu=document.getElementById('access-dropdown');
+ if(btn && menu){
+   btn.addEventListener('click',()=>menu.classList.toggle('d-none'));
+   document.addEventListener('click',(e)=>{
+     if(!e.target.closest('#access-menu-wrap')) menu.classList.add('d-none');
+   });
+ }
+})();
+</script>
 </body>
 </html>
