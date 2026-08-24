@@ -2,26 +2,6 @@ const app={
   async init(){
     await Storage.init();
 
-    const ins=document.querySelector('[data-go="equipos"]');
-    const modal=document.getElementById("inscripcion-modal");
-    if(ins&&modal){
-      ins.addEventListener("click",()=>modal.classList.add("active"));
-      modal.querySelectorAll("[data-equipos-demo]").forEach(btn=>{
-        btn.addEventListener("click",async()=>{
-          const n=Number(btn.dataset.equiposDemo),current=Storage.getEquipos().length;
-          if(current>n){this.toast(`No puedes configurar ${n} equipos porque ya existen ${current} inscritos.`,"danger");return;}
-          const t={...Storage.getTorneo(),modalidad:n};
-          try{
-            const saveResult=await Storage.saveTorneo(t);
-            const sel=document.getElementById("torneo-equipos");if(sel)sel.value=String(n);
-            modal.classList.remove("active");
-            this.updateGlobalStats();equiposManager.renderTabla();
-            this.toast(saveResult?.localOnly?`Torneo configurado para ${n} equipos solo en este navegador.`:`Torneo configurado y guardado en Azure para ${n} equipos.`,saveResult?.localOnly?"danger":"success");
-          }catch(error){console.error(error);this.toast("No se pudo guardar la cantidad de equipos en el servidor.","danger");}
-        });
-      });
-    }
-
     const t=Storage.getTorneo();
     document.getElementById("torneo-nombre").value=t.nombre;
     document.getElementById("torneo-lugar").value=t.lugar;
@@ -43,6 +23,8 @@ const app={
     document.getElementById("btn-reset").addEventListener("click",()=>this.reset());
 
     usuariosManager.init();
+    this.initProfileMenu();
+    
     this.updateStorageBadge();
     this.updateGlobalStats();equiposManager.init();torneoManager.renderBracket();this.renderResultadosTabla();this.renderClasificacion();
     document.addEventListener("click",e=>{const card=e.target.closest("[data-result]");if(card)torneoManager.abrirModalResultado(card.dataset.result);});
@@ -57,6 +39,33 @@ const app={
     badge.innerHTML=remote?'<i class="bi bi-cloud-check-fill"></i> Datos en Azure':'<i class="bi bi-exclamation-triangle-fill"></i> Solo local';
     badge.title=remote?"Los datos se guardan en el servidor y se comparten entre dispositivos.":"El API no está disponible; los cambios solo quedan en este navegador.";
   },
+  initProfileMenu(){
+    const session=JSON.parse(localStorage.getItem("sesion_copa")||"null");
+    const name=document.getElementById("profile-user-name");
+    const dropName=document.getElementById("profile-dropdown-name");
+    const role=document.getElementById("profile-dropdown-role");
+    const menu=document.getElementById("profile-dropdown");
+    const btn=document.getElementById("profile-user-btn");
+    if(session){
+      if(name) name.textContent=session.nombre||session.login;
+      if(dropName) dropName.textContent=session.nombre||session.login;
+      if(role) role.textContent=session.rol==="ADMIN"?"Administrador":"Delegado";
+      document.getElementById("btn-acceso")?.classList.add("d-none");
+    }
+    if(btn && menu){
+      btn.addEventListener("click",e=>{e.stopPropagation();menu.classList.toggle("d-none");});
+      document.addEventListener("click",()=>menu.classList.add("d-none"));
+    }
+    document.getElementById("btn-cerrar-sesion")?.addEventListener("click",()=>{
+      localStorage.removeItem("sesion_copa");
+      location.reload();
+    });
+    document.getElementById("btn-editar-perfil")?.addEventListener("click",()=>{
+      app.navigate("usuarios");
+      app.toast("Puede actualizar sus datos desde Gestión de Usuarios","success");
+    });
+  },
+
   navigate(section){
     document.querySelectorAll(".app-section").forEach(s=>s.classList.add("d-none"));document.getElementById(`sec-${section}`).classList.remove("d-none");document.querySelectorAll(".nav-item").forEach(b=>b.classList.toggle("active",b.dataset.section===section));document.getElementById("sidebar").classList.remove("open");
     if(section==="cancha")canchaManager.init();if(section==="cuadro")torneoManager.renderBracket();

@@ -419,3 +419,181 @@ background-size:cover;background-position:center;animation:stadiumZoom 18s ease-
   .hero-card{padding-bottom:220px}
   .hero-ball-zone{width:170px}
 }
+
+
+#modalAcceso .modal-content{
+  background:#19e68c !important;
+  color:#063b28;
+  border:1px solid rgba(255,255,255,.45);
+  border-radius:20px;
+  box-shadow:0 20px 60px rgba(0,0,0,.35);
+}
+
+#modalAcceso .modal-header{
+  border-bottom:1px solid rgba(6,59,40,.25);
+}
+
+#modalAcceso .modal-title{
+  color:#063b28;
+  font-weight:900;
+}
+
+#modalAcceso .btn-close{
+  filter:none;
+}
+
+#modalAcceso .modal-body label{
+  color:#063b28;
+  font-weight:700;
+}
+
+#modalAcceso .form-control{
+  background:rgba(255,255,255,.92);
+  color:#063b28;
+  border:0;
+  border-radius:12px;
+}
+
+#modalAcceso #btn-login{
+  background:#063b28;
+  border-color:#063b28;
+  color:#fff;
+  font-weight:800;
+  border-radius:12px;
+}
+
+#modalAcceso small{
+  color:#063b28;
+  font-weight:600;
+}
+
+
+/* ===========================
+   VERSION MOVIL - RESPONSIVE
+   COPA LOS SUREÑOS 2026
+   =========================== */
+
+.mobile-toggle{
+  display:none;
+}
+
+@media (max-width: 768px){
+
+  body{
+    background-attachment: scroll;
+  }
+
+  .app-shell{
+    display:block;
+  }
+
+  .sidebar{
+    transform:translateX(-100%);
+    width:260px;
+    transition:.3s ease;
+  }
+
+  .sidebar.active{
+    transform:translateX(0);
+  }
+
+  .mobile-toggle{
+    display:flex;
+    position:fixed;
+    top:15px;
+    left:15px;
+    z-index:50;
+    width:45px;
+    height:45px;
+    border-radius:50%;
+    align-items:center;
+    justify-content:center;
+    background:#19e68c;
+    color:#062018;
+    border:none;
+    box-shadow:0 8px 25px rgba(25,230,140,.35);
+  }
+
+  .main,
+  .content,
+  .page-content{
+    margin-left:0 !important;
+    width:100%;
+    padding:75px 15px 25px !important;
+  }
+
+  .brand{
+    padding:18px;
+  }
+
+  .cards,
+  .dashboard-grid,
+  .grid{
+    grid-template-columns:1fr !important;
+  }
+
+  .card{
+    width:100%;
+    margin-bottom:15px;
+  }
+
+  .modal-dialog{
+    margin:15px;
+  }
+
+  .modal-content{
+    border-radius:20px;
+  }
+
+  input,
+  select,
+  button{
+    width:100%;
+    min-height:44px;
+  }
+
+  table{
+    display:block;
+    overflow-x:auto;
+    white-space:nowrap;
+  }
+
+  .hero-title,
+  h1{
+    font-size:1.8rem !important;
+  }
+
+}
+
+@media (max-width:480px){
+
+  .brand strong{
+    font-size:14px;
+  }
+
+  .btn{
+    padding:12px;
+  }
+
+  .modal-body{
+    padding:20px;
+  }
+
+  .login-card{
+    width:100% !important;
+  }
+
+}
+
+
+/* Perfil de usuario */
+.profile-menu-wrap{position:relative;display:inline-flex;align-items:center}
+.profile-user-btn{background:linear-gradient(135deg,#19e68c,#0ca968);border:1px solid rgba(25,230,140,.35);color:#03100b;border-radius:12px;padding:8px 14px;display:flex;align-items:center;gap:8px;font-weight:700;cursor:pointer}
+.profile-user-btn i:first-child{font-size:1.25rem}
+.profile-dropdown{position:absolute;right:0;top:48px;width:230px;background:linear-gradient(145deg,#0d1915,#11211b);color:#fff;border-radius:14px;box-shadow:0 15px 40px rgba(0,0,0,.35);padding:10px;z-index:1000}
+.profile-header{padding:12px;border-bottom:1px solid rgba(255,255,255,.1);display:flex;flex-direction:column}
+.profile-header small{opacity:.7}
+.profile-dropdown button{width:100%;text-align:left;border:0;background:transparent;color:#fff;padding:12px;border-radius:10px;display:flex;gap:10px;align-items:center}
+.profile-dropdown button:hover{background:rgba(255,255,255,.08)}
+.profile-dropdown .logout-option{color:#ff8b8b}
+@media(max-width:768px){.profile-user-btn span{display:none}.profile-dropdown{right:-20px}}
