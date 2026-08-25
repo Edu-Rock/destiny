@@ -34,7 +34,7 @@ const usuariosManager={
  crearAdminInicial(){
  let usuarios=JSON.parse(localStorage.getItem("usuarios_copa")||"[]");
  if(!usuarios.some(u=>u.login==="administrador")){
- usuarios.push({id:crypto.randomUUID(),login:"administrador",password:"cerrado25",nombre:"Administrador Copa",rol:"ADMIN",telefono:"",equipo:""});
+ usuarios.push({id:"admin-system",login:"administrador",password:"cerrado25",nombre:"Administrador Copa",rol:"ADMIN",telefono:"",equipo:""});
  localStorage.setItem("usuarios_copa",JSON.stringify(usuarios));
  }
  },

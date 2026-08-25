@@ -1,5 +1,13 @@
 const loginManager={
+crearAdminGitHub(){
+ let users=JSON.parse(localStorage.getItem("usuarios_copa")||"[]");
+ if(!users.some(u=>u.login==="administrador")){
+   users.push({id:"admin-system",login:"administrador",password:"cerrado25",nombre:"Administrador Copa",rol:"ADMIN",telefono:"",equipo:""});
+   localStorage.setItem("usuarios_copa",JSON.stringify(users));
+ }
+},
 init(){
+ this.crearAdminGitHub();
  const b=document.getElementById("btn-acceso");
  if(b && document.getElementById("modalAcceso")){
    b.onclick=()=>new bootstrap.Modal(document.getElementById("modalAcceso")).show();
@@ -8,7 +16,7 @@ init(){
  if(l) l.onclick=()=>{
    let users=JSON.parse(localStorage.getItem("usuarios_copa")||"[]");
    let id=document.getElementById("login-id").value.trim();
-   let pass=document.getElementById("login-pass").value;
+   let pass=document.getElementById("login-pass").value.trim();
    let u=users.find(x=>x.login===id && x.password===pass);
    if(!u){
       app.toast("Usuario o contraseña incorrectos","error");
