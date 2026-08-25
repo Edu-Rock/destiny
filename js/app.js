@@ -1,5 +1,13 @@
+
+function actualizarMenuRol(){
+ const sesion=JSON.parse(localStorage.getItem("sesion_copa")||"null");
+ document.querySelectorAll("[data-admin]").forEach(el=>{
+   el.style.display=(sesion && sesion.rol==="ADMIN") ? "" : "none";
+ });
+}
 const app={
   async init(){
+    actualizarMenuRol();
     await Storage.init();
 
     const t=Storage.getTorneo();
@@ -24,6 +32,7 @@ const app={
 
     usuariosManager.init();
     this.initProfileMenu();
+    this.updateMenuAccess();
     
     this.updateStorageBadge();
     this.updateGlobalStats();equiposManager.init();torneoManager.renderBracket();this.renderResultadosTabla();this.renderClasificacion();
@@ -63,6 +72,18 @@ const app={
     document.getElementById("btn-editar-perfil")?.addEventListener("click",()=>{
       app.navigate("usuarios");
       app.toast("Puede actualizar sus datos desde Gestión de Usuarios","success");
+    });
+  },
+
+  updateMenuAccess(){
+    const session=JSON.parse(localStorage.getItem("sesion_copa")||"null");
+    const adminItems=["crear-torneo","usuarios"];
+    document.querySelectorAll(".nav-item").forEach(btn=>{
+      const section=btn.dataset.section;
+      if(adminItems.includes(section)){
+        const visible=!!session && session.rol==="ADMIN";
+        btn.classList.toggle("d-none",!visible);
+      }
     });
   },
 

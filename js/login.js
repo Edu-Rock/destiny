@@ -20,6 +20,9 @@ init(){
    if(typeof app.initProfileMenu==="function"){
       app.initProfileMenu();
    }
+   if(typeof app.updateMenuAccess==="function"){
+      app.updateMenuAccess();
+   }
    if(u.rol==="ADMIN"){
       app.navigate("usuarios");
    }else{

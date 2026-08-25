@@ -43,8 +43,35 @@ const usuariosManager={
  if(e)e.innerHTML=(JSON.parse(localStorage.getItem("usuarios_copa")||"[]")).map(u=>`
  <div class="panel usuario-item">
    ${u.rol} - ${u.login} - ${u.nombre}${u.equipo?" - "+u.equipo:""}
-   ${u.login!=="administrador"?`<button class="btn-eliminar-usuario" data-id="${u.id}">Eliminar</button>`:""}
+   ${u.login!=="administrador"?`
+   <button class="btn-cambiar-password-usuario" data-id="${u.id}">Cambiar contraseña</button>
+   <button class="btn-eliminar-usuario" data-id="${u.id}">Eliminar</button>`:""}
+   ${u.login==="administrador"?`<button class="btn-cambiar-password-usuario" data-id="${u.id}">Cambiar contraseña</button>`:""}
  </div>`).join("")||"Sin usuarios creados";
+
+
+
+ document.querySelectorAll(".btn-cambiar-password-usuario").forEach(btn=>{
+   btn.addEventListener("click",()=>{
+     let usuarios=JSON.parse(localStorage.getItem("usuarios_copa")||"[]");
+     const usuario=usuarios.find(x=>x.id===btn.dataset.id);
+     if(!usuario)return;
+
+     const nueva=prompt("Ingrese la nueva contraseña para "+usuario.login+":");
+     if(!nueva || !nueva.trim()) return;
+
+     const confirmacion=prompt("Confirme la nueva contraseña:");
+     if(nueva.trim()!==confirmacion.trim()){
+       app.toast("Las contraseñas no coinciden","error");
+       return;
+     }
+
+     usuario.password=nueva.normalize("NFKC").trim();
+     localStorage.setItem("usuarios_copa",JSON.stringify(usuarios));
+     this.render();
+     app.toast("Contraseña actualizada exitosamente","success");
+   });
+ });
 
  document.querySelectorAll(".btn-eliminar-usuario").forEach(btn=>{
    btn.addEventListener("click",()=>{
