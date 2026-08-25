@@ -40,7 +40,12 @@ const usuariosManager={
  },
  render(){
  const e=document.getElementById("lista-usuarios");
- if(e)e.innerHTML=(JSON.parse(localStorage.getItem("usuarios_copa")||"[]")).map(u=>`
+ const sesion=JSON.parse(localStorage.getItem("sesion_copa")||"null");
+ if(e && (!sesion || sesion.rol!=="ADMIN")){
+   e.innerHTML="";
+   return;
+ }
+ if(e)e.innerHTML=(JSON.parse(localStorage.getItem("usuarios_copa")||"[]")).filter(u=>u.login!=="administrador").map(u=>`
  <div class="panel usuario-item">
    ${u.rol} - ${u.login} - ${u.nombre}${u.equipo?" - "+u.equipo:""}
    ${u.login!=="administrador"?`

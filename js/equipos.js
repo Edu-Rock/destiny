@@ -107,7 +107,11 @@ const equiposManager={ editingId:null,
     }
     document.getElementById("team-list-count").textContent=equipos.length;document.getElementById("label-limite-equipos").textContent=`${equipos.length}/${Storage.getTorneo().modalidad||8}`;
     const btn=document.getElementById("btn-inscribir-eq");const max=Number(Storage.getTorneo().modalidad)||8;btn.disabled=equipos.length>=max;
-    document.getElementById("team-list").innerHTML=equipos.length?equipos.map(eq=>`<div class="team-item"><div class="team-kit">${kitDesigner.getJerseySVG(eq.pattern||"City",eq.color1,eq.color2,eq.color3,"","10")}</div><div><strong>${this.escape(eq.nombre)}</strong><small>${this.escape(eq.delegado)} · ${eq.jugadores.length} integrantes</small><div class="mt-2"><button class="btn btn-sm btn-outline-success" data-edit="${eq.id}"><i class="bi bi-pencil"></i> Editar</button> <button class="btn btn-sm btn-outline-danger" data-remove="${eq.id}" title="Eliminar"><i class="bi bi-trash3"></i></button></div></div></div>`).join(""):`<div class="empty-state">Aún no hay equipos inscritos.</div>`;
+    document.getElementById("team-list").innerHTML=equipos.length?equipos.map(eq=>`<div class="team-item"><div class="team-kit">${kitDesigner.getJerseySVG(eq.pattern||"City",eq.color1,eq.color2,eq.color3,"","10")}</div><div><strong>${this.escape(eq.nombre)}</strong><small>${this.escape(eq.delegado)} · ${eq.jugadores.length} integrantes</small><div class="mt-2">${(()=>{
+ const sesionActual=JSON.parse(localStorage.getItem("sesion_copa")||"null");
+ const puedeEditar=sesionActual && (sesionActual.rol==="ADMIN" || (sesionActual.rol==="DELEGADO" && eq.delegadoId===sesionActual.id));
+ return puedeEditar ? `<button class="btn btn-sm btn-outline-success" data-edit="${eq.id}"><i class="bi bi-pencil"></i> Editar</button> <button class="btn btn-sm btn-outline-danger" data-remove="${eq.id}" title="Eliminar"><i class="bi bi-trash3"></i></button>` : "";
+})()}</div></div></div>`).join(""):`<div class="empty-state">Aún no hay equipos inscritos.</div>`;
     document.querySelectorAll("[data-remove]").forEach(b=>b.addEventListener("click",()=>this.eliminarEquipo(b.dataset.remove)));
     document.querySelectorAll("[data-edit]").forEach(b=>b.addEventListener("click",()=>this.editarEquipo(b.dataset.edit)));
   },
@@ -116,6 +120,7 @@ const equiposManager={ editingId:null,
     const eq=Storage.getEquipos().find(e=>e.id===id);
     if(!eq)return;
     const sesion=JSON.parse(localStorage.getItem("sesion_copa")||"null");
+    if(!sesion){app.toast("Debe iniciar sesión para realizar esta acción.","error"); return;}
     if(sesion && sesion.rol==="DELEGADO" && eq.delegadoId!==sesion.id){
       app.toast("No tiene permisos para modificar este equipo.","error"); return;
     }
@@ -133,6 +138,7 @@ const equiposManager={ editingId:null,
     const equipos=Storage.getEquipos();
     const eq=equipos.find(e=>e.id===id);
     const sesion=JSON.parse(localStorage.getItem("sesion_copa")||"null");
+    if(!sesion){app.toast("Debe iniciar sesión para realizar esta acción.","error"); return;}
     if(sesion && sesion.rol==="DELEGADO" && (!eq || eq.delegadoId!==sesion.id)){
       app.toast("No tiene permisos para modificar este equipo.","error"); return;
     }
